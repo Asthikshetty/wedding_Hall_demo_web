@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Royal Grand Wedding Hall</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* --- CSS Variables & Resets --- */
+        :root {
+            --gold: #D4AF37;
+            --cream: #FFFDD0;
+            --blush: #FCE4EC;
+            --white: #FFFFFF;
+            --dark: #2C2C2C;
+            --font-heading: 'Playfair Display', serif;
+            --font-body: 'Poppins', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            color: var(--dark);
+            background-color: var(--white);
+            overflow-x: hidden;
+        }
+
+        /* --- Typography --- */
+        h1, h2, h3 {
+            font-family: var(--font-heading);
+            font-weight: 700;
+        }
+        
+        h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--dark);
+        }
+
+        .section-padding {
+            padding: 80px 10%;
+        }
+
+        /* --- Navbar --- */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 10%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            transition: 0.3s;
+            background: transparent;
+        }
+
+        nav.sticky {
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 15px 10%;
+        }
+
+        nav.sticky .logo, nav.sticky .nav-links a {
+            color: var(--dark);
+        }
+
+        .logo {
+            font-family: var(--font-heading);
+            font-size: 1.8rem;
+            color: var(--white);
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 1rem;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--gold);
+        }
+
+        .btn {
+            padding: 10px 24px;
+            background-color: var(--gold);
+            color: var(--white);
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-family: var(--font-body);
+            font-weight: 500;
+            transition: 0.3s ease;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background-color: #b5952f;
+            transform: translateY(-2px);
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1920&q=80') center/cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: var(--white);
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--white);
+        }
+        
+        .btn-outline:hover {
+            background: var(--white);
+            color: var(--dark);
+        }
+
+        /* --- About Section --- */
+        .about {
+            background-color: var(--cream);
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .about-text {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .about-text p {
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .features {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .feature-badge {
+            background: var(--white);
+            padding: 8px 15px;
+            border-radius: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            font-size: 0.9rem;
+            color: var(--gold);
+            font-weight: 500;
+        }
+
+        .about-image {
+            flex: 1;
+            min-width: 300px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* --- Services & Pricing (Glassmorphism Cards) --- */
+        .services, .pricing {
+            background-color: var(--blush);
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            transition: 0.3s;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+        }
+
+        .glass-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        .glass-card i {
+            font-size: 2.5rem;
+            color: var(--gold);
+            margin-bottom: 15px;
+        }
+
+        .glass-card h3 {
+            margin-bottom: 15px;
+        }
+
+        .price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--gold);
+            margin: 15px 0;
+        }
+
+        .glass-card ul {
+            list-style: none;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        
+        .glass-card ul li {
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+        
+        .glass-card ul li i {
+            font-size: 1rem;
+            margin-right: 10px;
+            margin-bottom: 0;
+        }
+
+        /* --- Gallery Section --- */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+        }
+
+        .gallery-item {
+            overflow: hidden;
+            border-radius: 10px;
+            position: relative;
+            height: 250px;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        /* --- Testimonials --- */
+        .testimonials {
+            background: var(--white);
+        }
+
+        .testimonial-card {
+            background: var(--cream);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .testimonial-card img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 15px;
+            border: 3px solid var(--gold);
+        }
+
+        /* --- Contact Section --- */
+        .contact {
+            background: var(--dark);
+            color: var(--white);
+        }
+
+        .contact h2 {
+            color: var(--white);
+        }
+
+        .contact-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+
+        .contact-form, .contact-info {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .contact-form input, .contact-form textarea {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: none;
+            border-radius: 5px;
+            font-family: var(--font-body);
+        }
+
+        .contact-info p {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .contact-info i {
+            color: var(--gold);
+        }
+
+        /* --- Footer --- */
+        footer {
+            background: #1a1a1a;
+            color: #ccc;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9rem;
+        }
+
+        .social-icons {
+            margin-top: 10px;
+        }
+
+        .social-icons a {
+            color: var(--white);
+            margin: 0 10px;
+            font-size: 1.2rem;
+            transition: 0.3s;
+        }
+
+        .social-icons a:hover {
+            color: var(--gold);
+        }
+
+        /* --- Booking Modal --- */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: var(--white);
+            padding: 40px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 400px;
+            position: relative;
+            text-align: center;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--dark);
+        }
+
+        .modal-content input, .modal-content select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: var(--font-body);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .nav-links { display: none; /* Add hamburger menu logic for real site */ }
+            .section-padding { padding: 50px 5%; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav id="navbar">
+        <a href="#" class="logo">Royal Grand</a>
+        <div class="nav-links">
+            <a href="#about">About</a>
+            <a href="#gallery">Gallery</a>
+            <a href="#services">Services</a>
+            <a href="#pricing">Packages</a>
+            <a href="#contact">Contact</a>
+            <button class="btn" onclick="openModal()">Book Now</button>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <h1>Make Your Dream Wedding Come True</h1>
+        <p>Luxury venue for unforgettable moments</p>
+        <div class="hero-btns">
+            <button class="btn" onclick="openModal()">Book Now</button>
+            <a href="#gallery" class="btn btn-outline">View Gallery</a>
+        </div>
+    </header>
+
+    <section id="about" class="section-padding about">
+        <div class="about-text">
+            <h2>Experience True Elegance</h2>
+            <p>Welcome to Royal Grand Wedding Hall, where luxury meets tradition. Our venue is meticulously designed to host the most spectacular weddings, offering a blend of modern amenities and classic romance. Let us turn your special day into a cinematic experience.</p>
+            <div class="features">
+                <span class="feature-badge"><i class="fa-solid fa-check"></i> Spacious Hall</span>
+                <span class="feature-badge"><i class="fa-solid fa-snowflake"></i> Central AC</span>
+                <span class="feature-badge"><i class="fa-solid fa-car"></i> Valet Parking</span>
+                <span class="feature-badge"><i class="fa-solid fa-utensils"></i> Premium Catering</span>
+            </div>
+        </div>
+        <div class="about-image">
+            <img src="https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=800&q=80" alt="Beautiful Wedding Decor">
+        </div>
+    </section>
+
+    <section id="services" class="section-padding services">
+        <h2>Our Services</h2>
+        <div class="grid-container">
+            <div class="glass-card">
+                <i class="fa-solid fa-clipboard-list"></i>
+                <h3>Wedding Planning</h3>
+                <p>End-to-end event management by our expert coordinators.</p>
+            </div>
+            <div class="glass-card">
+                <i class="fa-solid fa-champagne-glasses"></i>
+                <h3>Catering Services</h3>
+                <p>Exquisite multi-cuisine menus curated by top chefs.</p>
+            </div>
+            <div class="glass-card">
+                <i class="fa-solid fa-fan"></i>
+                <h3>Decoration</h3>
+                <p>Bespoke floral and lighting setups to match your theme.</p>
+            </div>
+            <div class="glass-card">
+                <i class="fa-solid fa-camera"></i>
+                <h3>Photography</h3>
+                <p>Cinematic videography and candid photography.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="gallery" class="section-padding">
+        <h2>Gallery</h2>
+        <div class="gallery-grid">
+            <div class="gallery-item"><img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=600&q=80" alt="Wedding Stage"></div>
+            <div class="gallery-item"><img src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=600&q=80" alt="Lighting Setup"></div>
+            <div class="gallery-item"><img src="https://images.unsplash.com/photo-1522413452208-996901845b4c?auto=format&fit=crop&w=600&q=80" alt="Dining Arrangement"></div>
+            <div class="gallery-item"><img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=600&q=80" alt="Decorations"></div>
+        </div>
+    </section>
+
+    <section id="pricing" class="section-padding pricing">
+        <h2>Wedding Packages</h2>
+        <div class="grid-container">
+            <div class="glass-card">
+                <h3>Silver</h3>
+                <div class="price">From $5,000</div>
+                <ul>
+                    <li><i class="fa-solid fa-check"></i> Hall Rental (8 Hours)</li>
+                    <li><i class="fa-solid fa-check"></i> Standard Decoration</li>
+                    <li><i class="fa-solid fa-check"></i> Buffet for 200 Guests</li>
+                </ul>
+                <button class="btn" onclick="openModal()">Choose Silver</button>
+            </div>
+            <div class="glass-card">
+                <h3>Gold</h3>
+                <div class="price">From $8,500</div>
+                <ul>
+                    <li><i class="fa-solid fa-check"></i> Hall Rental (12 Hours)</li>
+                    <li><i class="fa-solid fa-check"></i> Premium Floral Decor</li>
+                    <li><i class="fa-solid fa-check"></i> Buffet for 400 Guests</li>
+                    <li><i class="fa-solid fa-check"></i> DJ & Lighting</li>
+                </ul>
+                <button class="btn" onclick="openModal()">Choose Gold</button>
+            </div>
+            <div class="glass-card">
+                <h3>Platinum</h3>
+                <div class="price">From $12,000</div>
+                <ul>
+                    <li><i class="fa-solid fa-check"></i> Full Day Access</li>
+                    <li><i class="fa-solid fa-check"></i> Custom Luxury Decor</li>
+                    <li><i class="fa-solid fa-check"></i> Premium Multi-Cuisine</li>
+                    <li><i class="fa-solid fa-check"></i> Photography Included</li>
+                </ul>
+                <button class="btn" onclick="openModal()">Choose Platinum</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding testimonials">
+        <h2>Happy Couples</h2>
+        <div class="grid-container">
+            <div class="testimonial-card">
+                <img src="https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=150&q=80" alt="Couple">
+                <p>"Absolutely breathtaking venue! The staff made sure everything was perfect. A truly cinematic experience."</p>
+                <h4>- Sarah & James</h4>
+            </div>
+            <div class="testimonial-card">
+                <img src="https://images.unsplash.com/photo-1541250848049-b4f7141dca3f?auto=format&fit=crop&w=150&q=80" alt="Couple">
+                <p>"The decorations and catering were top-notch. Our guests are still talking about how beautiful the hall was."</p>
+                <h4>- Priya & Rahul</h4>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section-padding contact">
+        <h2>Contact Us</h2>
+        <div class="contact-container">
+            <div class="contact-info">
+                <h3>Get in Touch</h3>
+                <br>
+                <p><i class="fa-solid fa-location-dot"></i> 123 Luxury Avenue, Elegance City, NY 10001</p>
+                <p><i class="fa-solid fa-phone"></i> +1 (555) 123-4567</p>
+                <p><i class="fa-solid fa-envelope"></i> bookings@royalgrand.com</p>
+            </div>
+            <div class="contact-form">
+                <form onsubmit="event.preventDefault(); alert('Message Sent!');">
+                    <input type="text" placeholder="Your Name" required>
+                    <input type="email" placeholder="Your Email" required>
+                    <input type="date" required>
+                    <textarea rows="4" placeholder="Your Message" required></textarea>
+                    <button type="submit" class="btn">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Royal Grand Wedding Hall. All rights reserved.</p>
+        <div class="social-icons">
+            <a href="#"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#"><i class="fa-brands fa-facebook"></i></a>
+            <a href="#"><i class="fa-brands fa-pinterest"></i></a>
+        </div>
+    </footer>
+
+    <div id="bookingModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <h3 style="margin-bottom: 20px;">Book Your Date</h3>
+            <form onsubmit="event.preventDefault(); alert('Booking Request Received!'); closeModal();">
+                <input type="text" placeholder="Full Name" required>
+                <input type="tel" placeholder="Phone Number" required>
+                <input type="date" required>
+                <select required>
+                    <option value="" disabled selected>Select Package</option>
+                    <option value="silver">Silver</option>
+                    <option value="gold">Gold</option>
+                    <option value="platinum">Platinum</option>
+                </select>
+                <button type="submit" class="btn" style="width: 100%;">Submit Request</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Sticky Navbar Effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('sticky');
+            } else {
+                navbar.classList.remove('sticky');
+            }
+        });
+
+        // Modal Logic
+        const modal = document.getElementById('bookingModal');
+
+        function openModal() {
+            modal.style.display = 'flex';
+        }
+
+        function closeModal() {
+            modal.style.display = 'none';
+        }
+
+        // Close modal if clicking outside of it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+    </script>
+</body>
+</html>
